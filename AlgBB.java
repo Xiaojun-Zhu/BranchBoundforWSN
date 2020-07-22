@@ -287,12 +287,14 @@ public class AlgBB extends Solver{
 	}
 
 	
+	public double initial=0;//lifetime of current found tree
+	
 
 
 	public double  BranchBound() throws UnknownObjectException, FileNotFoundException, IloException {
 		//use the this.graph field to get the input
 
-		double cur=0;//initial lifetime
+		double cur=initial;//initial lifetime
 
 		graph.get(0).E=GenerateReadWriteNetwork.max_energy;
 
