@@ -152,6 +152,34 @@ public class EvalScript {
 
 	}
 	
+	public static void evaluate_Combine() {
+		FileOutputStream f;
+		PrintStream ps;
+
+		try {
+			f = new FileOutputStream("EvalComb10m.txt", true);
+			ps = new PrintStream(f);		
+
+			GenerateReadWriteNetwork grwn=new GenerateReadWriteNetwork();
+			grwn.prepareRead("networks30to100.txt");
+			Solver solver=new AlgCombineFSBB();
+			solver.set_time_limit(time_limit_in_seconds);
+
+			ArrayList<DNode> cgraph=null;
+			while ( (cgraph=grwn.nextNetwork())!= null) {	
+			
+				
+				solver.set_graph(cgraph);
+				run_one_method_one_network(solver,grwn.cID,ps);		
+			}
+			ps.close();	
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	public static void evaluate_ILPB() {
 		FileOutputStream f;
 		PrintStream ps;
@@ -315,12 +343,12 @@ public class EvalScript {
 	public static void main(String[] args)
 			throws NumberFormatException, IOException,  InterruptedException {
 		
-		
-		
-	    evaluate_BB();
-		evaluate_fs();
-		evaluate_ILPB();
-		evaluate_ILPBD();
+	//	System.out.println("hello world");
+		evaluate_Combine();
+//	    evaluate_BB();
+//		evaluate_fs();
+//		evaluate_ILPB();
+//		evaluate_ILPBD();
 
 	}
 }
